@@ -92,10 +92,12 @@ function orientacion(terremoto,num_dia,lat1,long1,hora_menos_uno,minuto,segundo,
                 %creo la ventana desde el origen del terremoto/(HORA-1)-MINUTO-SEGUNDO
 
                 to=(hora_menos_uno*3600+minuto*60+segundo)*fs;
-                %to=(2*60*60+25*60+12)*fs;
                 tlim = 600; %increase to widen R1 window
-                        r1 = to+fs*((1.0 / 4.0)*del*111.111 - 30); % window start - assume Rayleigh slowness of 1/4 s/km
-                        r2 = r1 + tlim*fs; %window finish
+                tlimp=tlim*0.1;
+%               r1 = to+fs*((1.0 / 4.0)*del*111.111 - 30); % window start - assume Rayleigh slowness of 1/4 s/km
+                r1 = to+fs*((1.0 / 4.0)*del*111.111 - tlimp);     
+                %r2 = r1 + tlim*fs; %window finish
+                r2 = r1 + tlim + tlimp;
                         r1=floor(r1);
                         r2=floor(r2);
                         %ventana de la señal
@@ -136,7 +138,7 @@ function orientacion(terremoto,num_dia,lat1,long1,hora_menos_uno,minuto,segundo,
                                 %rdat = cos(rad) * x2/max(abs(x2)) + sin(rad) * x1/max(abs(x1));
                                 %rdat = cos(rad) * d1(n1:n2)/max(abs(d1(n1:n2))) + sin(rad) * d2(n1:n2)/max(abs(d2(n1:n2)));
 
-                                % compute power in rotated trace - probably a good idea - may use this
+                               
                                 j = j + 1;
                 %               
                                 pow_rdat(j) = sum(rdat.^2)/length(rdat);
